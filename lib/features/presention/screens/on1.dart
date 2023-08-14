@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:up_course2/core/widgets/elev_button/elev_button.dart';
+import 'package:up_course2/core/widgets/text_button/text_button.dart';
 
 import '../../../core/app,strings.dart';
 import '../../../core/app.assets.dart';
@@ -36,21 +38,12 @@ class _On1State extends State<On1> {
                           ? Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextButton(
-                                  onPressed: () {
-                                    controller.jumpToPage(2);
-                                  },
-                                  child: Text(AppStrings.appSkip,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              color: AppColors.white
-                                                  .withOpacity(.44),
-                                              fontSize: 16)),
-                                ),
-                              ),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CostumeTextButton(
+                                      text: AppStrings.appSkip,
+                                      onPressed: () {
+                                        controller.jumpToPage(2);
+                                      })),
                             )
                           : const SizedBox(
                               height: 63,
@@ -100,42 +93,34 @@ class _On1State extends State<On1> {
                           children: [
                             const Spacer(),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: index != 2
-                                  ? ElevatedButton(
-                                      onPressed: () {
-                                        controller.nextPage(
-                                            duration: const Duration(
-                                                milliseconds: 1000),
-                                            curve:
-                                                Curves.fastLinearToSlowEaseIn);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          // Adjust button style here
-                                          ),
-                                      child: const Text(AppStrings.appNext),
-                                    )
-                                  : ElevatedButton(
-                                      onPressed: () async {
-                                        await sl<CacheHelper>()
-                                            .saveData(
-                                                key: AppStrings.appOnBoarding,
-                                                value: true)
-                                            .then((value) {
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const Home()));
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          // Adjust button style here
-                                          ),
-                                      child:
-                                          const Text(AppStrings.appGetStarted),
-                                    ),
-                            ),
+                                padding: const EdgeInsets.all(10.0),
+                                child: index != 2
+                                    ? ElevCustomButton(
+                                        text: AppStrings.appNext,
+                                        onPressed: () {
+                                          controller.nextPage(
+                                              duration: const Duration(
+                                                  milliseconds: 1000),
+                                              curve: Curves
+                                                  .fastLinearToSlowEaseIn);
+                                        },
+                                      )
+                                    : ElevCustomButton(
+                                        text: AppStrings.appGetStarted,
+                                        onPressed: () async {
+                                          await sl<CacheHelper>()
+                                              .saveData(
+                                                  key: AppStrings.appOnBoarding,
+                                                  value: true)
+                                              .then((value) {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const Home()));
+                                          });
+                                        },
+                                      )),
                           ],
                         ),
                       ),
