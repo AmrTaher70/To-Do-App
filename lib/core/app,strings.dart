@@ -1,5 +1,6 @@
 class AppStrings {
   static const String appName = 'UpTodo';
+  static const String appColor = 'Color';
   static const String appSkip = 'SKIP';
   static const String appTitleOn1 = 'Manage your tasks';
   static const String appTitleOn2 = 'Create daily routine';
@@ -14,8 +15,10 @@ class AppStrings {
   static const String appSubOn3 =
       'You can organize your daily tasks by adding your tasks into separate categories';
   static const String appAddTask = 'Add Task';
+  static const String appTitle = 'Title';
+  static const String appNote = 'Note';
   static const String appHintTitle = 'Enter The Title Here';
-  static const String appHintNote = 'Enter  Note Here';
+  static const String appHintNote = 'Enter Note Here';
   static const String appTaskCompleted = 'TASK COMPLETED';
   static const String appDeleteTask = 'DELETE TASK';
   static const String appCancel = 'CANCEL';
