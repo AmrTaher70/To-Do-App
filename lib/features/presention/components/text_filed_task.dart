@@ -3,17 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:up_course2/core/widgets/app.colors.dart';
 
 class TextFiledTask extends StatelessWidget {
-  const TextFiledTask(
-      {super.key,
-      required this.title,
-      required this.hintTitle,
-      required this.controller,
-      this.suffixIcon,
-      this.readonly = false});
+  const TextFiledTask({
+    super.key,
+    required this.title,
+    required this.hintTitle,
+    required this.controller,
+    this.suffixIcon,
+    this.readonly = false,
+    this.validator,
+  });
   final String title;
   final IconButton? suffixIcon;
   final String hintTitle;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final bool readonly;
 
   @override
@@ -28,9 +31,10 @@ class TextFiledTask extends StatelessWidget {
         SizedBox(
           height: 8.h,
         ),
-        TextField(
+        TextFormField(
           readOnly: readonly,
           controller: controller,
+          validator: validator,
           style: const TextStyle(color: AppColors.white),
           decoration: InputDecoration(
             hintText: hintTitle,

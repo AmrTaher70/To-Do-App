@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 
 import 'package:up_course2/core/widgets/elev_button/elev_button.dart';
 import 'package:up_course2/features/auth/task/cubit/cubit/task_cubit_cubit.dart';
+import 'package:up_course2/features/auth/task/data/model_task.dart';
+import '../../../../../../core/commont/commont.dart';
 import '../../../../../../core/widgets/app,strings.dart';
 import '../../../../../../core/widgets/app.colors.dart';
 
@@ -36,24 +38,44 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
         ),
       ),
-      body: Form(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: BlocBuilder<TaskCubitCubit, TaskCubitState>(
-              builder: (context, state) {
-                final cubit = BlocProvider.of<TaskCubitCubit>(context);
-                return Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: BlocConsumer<TaskCubitCubit, TaskCubitState>(
+            listener: (context, state) {
+              if (state is InsertTaskSuccessState) {
+                showToast(
+                    message: 'Added Successfully', state: ToastStates.success);
+                Navigator.pop(context);
+              }
+            },
+            builder: (context, state) {
+              final cubit = BlocProvider.of<TaskCubitCubit>(context);
+              return Form(
+                key: BlocProvider.of<TaskCubitCubit>(context).formKey,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFiledTask(
                       controller: cubit.textController,
                       hintTitle: AppStrings.appHintTitle,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'Ender Valid Title';
+                        }
+                        return null;
+                      },
                       title: AppStrings.appTitle,
                     ),
                     SizedBox(height: 24.h),
                     TextFiledTask(
                       controller: cubit.noteController,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'Ender Valid Node';
+                        }
+                        return null;
+                      },
                       hintTitle: AppStrings.appHintNote,
                       title: AppStrings.appNote,
                     ),
@@ -129,7 +151,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                         SizedBox(width: 8.w),
                                     itemBuilder: (context, index) {
                                       cubit.getColor;
-
                                       return GestureDetector(
                                         onTap: () {
                                           BlocProvider.of<TaskCubitCubit>(
@@ -159,7 +180,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         ],
                       ),
                     ),
-                    //  const Spacer(),
                     SizedBox(
                       height: 90.h,
                     ),
@@ -168,14 +188,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       width: double.infinity,
                       child: ElevCustomButton(
                         text: 'CREATE TASK',
-                        onPressed: () {},
+                        onPressed: () {
+                          if (BlocProvider.of<TaskCubitCubit>(context)
+                              .formKey
+                              .currentState!
+                              .validate()) {
+                            BlocProvider.of<TaskCubitCubit>(context)
+                                .insertTask();
+                          }
+                        },
                         backgroundColor: AppColors.primary,
                       ),
                     ),
                   ],
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

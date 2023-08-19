@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../core/widgets/app.colors.dart';
+import '../../data/model_task.dart';
 
 part 'task_cubit_state.dart';
 
@@ -18,6 +19,7 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
   String startTime = DateFormat('hh:mm a').format(DateTime.now());
   String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 45)));
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   void getDate(context) async {
     emit((GetDateLoadingState()));
     DateTime? pickedDate = await showDatePicker(
@@ -84,5 +86,29 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
   void changeCheckMarkIndex(index) {
     currentIndex = index;
     emit(ChangeCheckMarkIndexState());
+  }
+
+  List<ModelTaskManager> taskList = [];
+  void insertTask() {
+    emit(InsertTaskLoadingState());
+    try {
+      taskList.add(
+        ModelTaskManager(
+          id: '1',
+          title: textController.text,
+          note: noteController.text,
+          startTime: startTime,
+          date: DateFormat.yMd().format(currentDate),
+          endTime: endTime,
+          isCompleted: false,
+          color: currentIndex,
+        ),
+      );
+      textController.clear();
+      noteController.clear();
+      emit(InsertTaskSuccessState());
+    } catch (e) {
+      emit(InsertTaskErrorState());
+    }
   }
 }

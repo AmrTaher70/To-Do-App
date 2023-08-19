@@ -24,3 +24,9 @@ class GetTimeEndSuccessState extends TaskCubitState {}
 class GetTimeEndErrorState extends TaskCubitState {}
 
 class ChangeCheckMarkIndexState extends TaskCubitState {}
+
+class InsertTaskLoadingState extends TaskCubitState {}
+
+class InsertTaskSuccessState extends TaskCubitState {}
+
+class InsertTaskErrorState extends TaskCubitState {}
