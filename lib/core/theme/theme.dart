@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../app.colors.dart';
+import '../widgets/app.colors.dart';
 
 ThemeData getAppTheme() {
   return ThemeData(

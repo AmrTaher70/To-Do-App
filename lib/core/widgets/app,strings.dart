@@ -1,5 +1,5 @@
 class AppStrings {
-  static const String appName = 'UpTodo';
+  static const String appName = 'TODO';
   static const String appColor = 'Color';
   static const String appSkip = 'SKIP';
   static const String appTitleOn1 = 'Manage your tasks';
@@ -19,7 +19,7 @@ class AppStrings {
   static const String appNote = 'Note';
   static const String appHintTitle = 'Enter The Title Here';
   static const String appHintNote = 'Enter Note Here';
-  static const String appTaskCompleted = 'TASK COMPLETED';
+  static const String appTaskCompleted = 'COMPLETED';
   static const String appDeleteTask = 'DELETE TASK';
   static const String appCancel = 'CANCEL';
   static const String appOnBoarding = 'onBoarding';

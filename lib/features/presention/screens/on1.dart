@@ -3,9 +3,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:up_course2/core/widgets/elev_button/elev_button.dart';
 import 'package:up_course2/core/widgets/text_button/text_button.dart';
 
-import '../../../core/app,strings.dart';
-import '../../../core/app.assets.dart';
-import '../../../core/app.colors.dart';
+import '../../../core/widgets/app,strings.dart';
+import '../../../core/widgets/app.assets.dart';
+import '../../../core/widgets/app.colors.dart';
 import '../../../core/dataBase/cache_helper.dart';
 import '../../../core/dataBase/services/services.locator.dart';
 import '../../auth/task/presentation/screens/Home_Screen/home.dart';

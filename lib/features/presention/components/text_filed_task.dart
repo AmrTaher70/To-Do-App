@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:up_course2/core/app.colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:up_course2/core/widgets/app.colors.dart';
 
 class TextFiledTask extends StatelessWidget {
   const TextFiledTask(
@@ -24,8 +25,8 @@ class TextFiledTask extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.displayMedium,
         ),
-        const SizedBox(
-          height: 8,
+        SizedBox(
+          height: 8.h,
         ),
         TextField(
           readOnly: readonly,

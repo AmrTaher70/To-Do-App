@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../app.colors.dart';
+import '../app.colors.dart';
 
 class CostumeTextButton extends StatelessWidget {
   const CostumeTextButton(

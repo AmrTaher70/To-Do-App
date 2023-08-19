@@ -1,5 +1,5 @@
-import '../../../../../core/app,strings.dart';
-import '../../../../../core/app.assets.dart';
+import '../../../../../core/widgets/app,strings.dart';
+import '../../../../../core/widgets/app.assets.dart';
 
 class OnBoardingModel {
   final String imgPath;

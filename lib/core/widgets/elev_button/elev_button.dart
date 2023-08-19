@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:up_course2/core/app.colors.dart';
+import 'package:up_course2/core/widgets/app.colors.dart';
 
 // ignore: must_be_immutable
 class ElevCustomButton extends StatelessWidget {

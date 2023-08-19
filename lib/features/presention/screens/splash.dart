@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:up_course2/core/dataBase/cache_helper.dart';
 import 'package:up_course2/features/auth/task/presentation/screens/Home_Screen/home.dart';
 
-import '../../../core/app,strings.dart';
-import '../../../core/app.assets.dart';
+import '../../../core/widgets/app,strings.dart';
+import '../../../core/widgets/app.assets.dart';
 import '../../../core/dataBase/services/services.locator.dart';
 import 'on1.dart';
 

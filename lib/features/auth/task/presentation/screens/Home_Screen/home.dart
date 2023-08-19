@@ -2,12 +2,14 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:up_course2/core/app,strings.dart';
-import 'package:up_course2/core/app.assets.dart';
-import 'package:up_course2/core/app.colors.dart';
+import 'package:up_course2/core/widgets/app,strings.dart';
+import 'package:up_course2/core/widgets/app.assets.dart';
+import 'package:up_course2/core/widgets/app.colors.dart';
 import 'package:up_course2/core/commont/commont.dart';
 import 'package:up_course2/core/widgets/elev_button/elev_button.dart';
 import 'package:up_course2/features/auth/task/presentation/screens/Add_Task/add_task_screen.dart';
+
+import '../../../data/model_task.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +17,8 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
+
+late final ModelTaskManager taskModel;
 
 class _HomeState extends State<Home> {
   @override
@@ -62,59 +66,69 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 11,
               ),
-              //noTask(),
-              InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          height: 250,
-                          color: AppColors.deepGry,
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 48,
-                                  width: double.infinity,
-                                  child: ElevCustomButton(
-                                    text: AppStrings.appTaskCompleted,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                SizedBox(
-                                  height: 48,
-                                  width: double.infinity,
-                                  child: ElevCustomButton(
-                                    text: AppStrings.appDeleteTask,
-                                    backgroundColor: AppColors.red,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                SizedBox(
-                                  height: 48,
-                                  width: double.infinity,
-                                  child: ElevCustomButton(
-                                    text: AppStrings.appCancel,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
+              ModelTaskManager.taskList.isEmpty
+                  ? noTask()
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: ModelTaskManager.taskList.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    height: 250,
+                                    color: AppColors.deepGry,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 48,
+                                            width: double.infinity,
+                                            child: ElevCustomButton(
+                                              text: AppStrings.appTaskCompleted,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 24,
+                                          ),
+                                          SizedBox(
+                                            height: 48,
+                                            width: double.infinity,
+                                            child: ElevCustomButton(
+                                              text: AppStrings.appDeleteTask,
+                                              backgroundColor: AppColors.red,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 24,
+                                          ),
+                                          SizedBox(
+                                            height: 48,
+                                            width: double.infinity,
+                                            child: ElevCustomButton(
+                                              text: AppStrings.appCancel,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: TaskWidget(
+                              taskModel: ModelTaskManager.taskList[index],
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: const TaskWidget()),
-              const TaskWidget(),
+                          );
+                        },
+                      ),
+                    ),
             ],
           ),
         ),
@@ -128,7 +142,27 @@ class _HomeState extends State<Home> {
 class TaskWidget extends StatelessWidget {
   const TaskWidget({
     super.key,
+    required this.taskModel,
   });
+  final ModelTaskManager taskModel;
+  Color getColor(index) {
+    switch (index) {
+      case 0:
+        return AppColors.red;
+      case 1:
+        return AppColors.green;
+      case 2:
+        return AppColors.lightBlue;
+      case 3:
+        return AppColors.blue;
+      case 4:
+        return AppColors.orange;
+      case 5:
+        return AppColors.purple;
+      default:
+        return AppColors.gray;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +170,7 @@ class TaskWidget extends StatelessWidget {
       height: 132,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.red,
+        color: getColor(taskModel.color),
         borderRadius: BorderRadius.circular(16),
       ),
       margin: const EdgeInsets.only(bottom: 10),
@@ -149,7 +183,7 @@ class TaskWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Task 1',
+                    taskModel.title,
                     style: Theme.of(context)
                         .textTheme
                         .displayLarge!
@@ -168,7 +202,7 @@ class TaskWidget extends StatelessWidget {
                       const SizedBox(
                         width: 8,
                       ),
-                      Text('09:33 PM - 09:48 PM',
+                      Text('${taskModel.startTime} - ${taskModel.endTime}',
                           style: Theme.of(context).textTheme.displayMedium),
                     ],
                   ),
@@ -176,7 +210,7 @@ class TaskWidget extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    'Learn Dart',
+                    taskModel.note,
                     style: Theme.of(context)
                         .textTheme
                         .displayLarge!
@@ -195,7 +229,10 @@ class TaskWidget extends StatelessWidget {
             ),
             RotatedBox(
               quarterTurns: 3,
-              child: Text('TODO',
+              child: Text(
+                  taskModel.isCompleted
+                      ? AppStrings.appTaskCompleted
+                      : AppStrings.appName,
                   style: Theme.of(context).textTheme.displayMedium),
             ),
           ],
