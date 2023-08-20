@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
+import 'package:up_course2/core/dataBase/services/services.locator.dart';
 
+import '../../../../../core/dataBase/sqflit_helper/sqflit_helper.dart';
 import '../../../../../core/widgets/app.colors.dart';
 import '../../data/model_task.dart';
 
@@ -89,26 +91,50 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
   }
 
   List<ModelTaskManager> taskList = [];
-  void insertTask() {
+  void insertTask() async {
     emit(InsertTaskLoadingState());
     try {
-      taskList.add(
+      await sl<SqfliteHelper>().insertToDB(
         ModelTaskManager(
-          id: '1',
           title: textController.text,
           note: noteController.text,
           startTime: startTime,
           date: DateFormat.yMd().format(currentDate),
           endTime: endTime,
-          isCompleted: false,
+          isCompleted: 0,
           color: currentIndex,
         ),
       );
+      getTasks();
       textController.clear();
       noteController.clear();
       emit(InsertTaskSuccessState());
     } catch (e) {
       emit(InsertTaskErrorState());
     }
+  }
+
+//! getTasks
+  void getTasks() async {
+    emit(GetTaskLoadingState());
+    await sl<SqfliteHelper>().getFromDB().then((value) {
+      taskList = value.map((e) => ModelTaskManager.fromJson(e)).toList();
+      emit(GetTaskSuccessState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(GetTaskErrorState());
+    });
+  }
+
+  //! updateTask
+  void updateTask(id) async {
+    emit(UpdateTaskLoadingState());
+    await sl<SqfliteHelper>().updateDB(id).then((value) {
+      getTasks();
+      emit(UpdateTaskSuccessState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(UpdateTaskErrorState());
+    });
   }
 }

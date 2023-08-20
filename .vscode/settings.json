@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/amrha/Downloads/test 1/test2/linux"
+    "cmake.sourceDirectory": "C:/Users/amrha/Downloads/test 1/test2/linux",
+    "git.ignoreLimitWarning": true
 }

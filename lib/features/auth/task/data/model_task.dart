@@ -1,14 +1,14 @@
 class ModelTaskManager {
-  final String id;
+  final int? id;
   final String title;
   final String note;
   final String startTime;
   final String endTime;
   final String date;
-  final bool isCompleted;
+  final int isCompleted;
   final int color;
   ModelTaskManager({
-    required this.id,
+    this.id,
     required this.title,
     required this.note,
     required this.startTime,
@@ -17,4 +17,16 @@ class ModelTaskManager {
     required this.isCompleted,
     required this.color,
   });
+  factory ModelTaskManager.fromJson(Map<String, dynamic> jsonData) {
+    return ModelTaskManager(
+      id: jsonData['id'],
+      date: jsonData['date'],
+      title: jsonData['title'],
+      note: jsonData['note'],
+      startTime: jsonData['startTime'],
+      endTime: jsonData['endTime'],
+      isCompleted: jsonData['isCompleted'],
+      color: jsonData['color'],
+    );
+  }
 }

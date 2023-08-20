@@ -30,3 +30,15 @@ class InsertTaskLoadingState extends TaskCubitState {}
 class InsertTaskSuccessState extends TaskCubitState {}
 
 class InsertTaskErrorState extends TaskCubitState {}
+
+class GetTaskLoadingState extends TaskCubitState {}
+
+class GetTaskSuccessState extends TaskCubitState {}
+
+class GetTaskErrorState extends TaskCubitState {}
+
+class UpdateTaskLoadingState extends TaskCubitState {}
+
+class UpdateTaskSuccessState extends TaskCubitState {}
+
+class UpdateTaskErrorState extends TaskCubitState {}

@@ -90,15 +90,33 @@ class _HomeState extends State<Home> {
                                           padding: const EdgeInsets.all(24.0),
                                           child: Column(
                                             children: [
-                                              SizedBox(
-                                                height: 48,
-                                                width: double.infinity,
-                                                child: ElevCustomButton(
-                                                  text: AppStrings
-                                                      .appTaskCompleted,
-                                                  onPressed: () {},
-                                                ),
-                                              ),
+                                              BlocProvider.of<TaskCubitCubit>(
+                                                              context)
+                                                          .taskList[index]
+                                                          .isCompleted ==
+                                                      1
+                                                  ? Container()
+                                                  : SizedBox(
+                                                      height: 48,
+                                                      width: double.infinity,
+                                                      child: ElevCustomButton(
+                                                        text: AppStrings
+                                                            .appTaskCompleted,
+                                                        onPressed: () {
+                                                          BlocProvider.of<
+                                                                      TaskCubitCubit>(
+                                                                  context)
+                                                              .updateTask(BlocProvider
+                                                                      .of<TaskCubitCubit>(
+                                                                          context)
+                                                                  .taskList[
+                                                                      index]
+                                                                  .id);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ),
                                               const SizedBox(
                                                 height: 24,
                                               ),
@@ -121,7 +139,9 @@ class _HomeState extends State<Home> {
                                                 width: double.infinity,
                                                 child: ElevCustomButton(
                                                   text: AppStrings.appCancel,
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
                                                 ),
                                               ),
                                             ],
@@ -243,7 +263,7 @@ class TaskWidget extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                  taskModel.isCompleted
+                  taskModel.isCompleted == 1
                       ? AppStrings.appTaskCompleted
                       : AppStrings.appName,
                   style: Theme.of(context).textTheme.displayMedium),
