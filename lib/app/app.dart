@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:up_course2/features/auth/task/presentation/screens/Home_Screen/home.dart';
+import 'package:up_course2/features/presention/screens/splash.dart';
 
 import '../core/theme/theme.dart';
 //import '../features/presention/screens/splash.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           darkTheme: getAppDarkTheme(),
           themeMode: ThemeMode.light,
           debugShowCheckedModeBanner: false,
-          home: const SafeArea(child: Home()),
+          home: const SafeArea(child: SplashScreen()),
         );
       },
     );
