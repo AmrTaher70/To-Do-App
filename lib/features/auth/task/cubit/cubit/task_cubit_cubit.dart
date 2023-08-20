@@ -18,6 +18,7 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
   TextEditingController dateController = TextEditingController();
   int currentIndex = 0;
   DateTime currentDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   String startTime = DateFormat('hh:mm a').format(DateTime.now());
   String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 45)));
@@ -90,6 +91,13 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
     emit(ChangeCheckMarkIndexState());
   }
 
+  void getSelectedDate(date) {
+    emit(GetSelectedDateLoadingState());
+    selectedDate = date;
+    emit(GetSelectedDateSuccessState());
+    getTasks();
+  }
+
   List<ModelTaskManager> taskList = [];
   void insertTask() async {
     emit(InsertTaskLoadingState());
@@ -118,7 +126,13 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
   void getTasks() async {
     emit(GetTaskLoadingState());
     await sl<SqfliteHelper>().getFromDB().then((value) {
-      taskList = value.map((e) => ModelTaskManager.fromJson(e)).toList();
+      taskList = value
+          .map((e) => ModelTaskManager.fromJson(e))
+          .toList()
+          .where(
+            (element) => element.date == DateFormat.yMd().format(selectedDate),
+          )
+          .toList();
       emit(GetTaskSuccessState());
     }).catchError((e) {
       print(e.toString());
@@ -135,6 +149,18 @@ class TaskCubitCubit extends Cubit<TaskCubitState> {
     }).catchError((e) {
       print(e.toString());
       emit(UpdateTaskErrorState());
+    });
+  }
+
+  //! DeleteTask
+  void deleteTask(id) async {
+    emit(DeleteTaskLoadingState());
+    await sl<SqfliteHelper>().deleteDB(id).then((value) {
+      getTasks();
+      emit(DeleteTaskSuccessState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(DeleteTaskErrorState());
     });
   }
 }

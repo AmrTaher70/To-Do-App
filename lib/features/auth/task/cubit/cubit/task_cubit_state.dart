@@ -11,6 +11,10 @@ class GetDateSuccessState extends TaskCubitState {}
 
 class GetDateErrorState extends TaskCubitState {}
 
+class GetSelectedDateLoadingState extends TaskCubitState {}
+
+class GetSelectedDateSuccessState extends TaskCubitState {}
+
 class GetTimeStartLoadingState extends TaskCubitState {}
 
 class GetTimeStartSuccessState extends TaskCubitState {}
@@ -42,3 +46,9 @@ class UpdateTaskLoadingState extends TaskCubitState {}
 class UpdateTaskSuccessState extends TaskCubitState {}
 
 class UpdateTaskErrorState extends TaskCubitState {}
+
+class DeleteTaskLoadingState extends TaskCubitState {}
+
+class DeleteTaskSuccessState extends TaskCubitState {}
+
+class DeleteTaskErrorState extends TaskCubitState {}

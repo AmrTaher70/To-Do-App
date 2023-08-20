@@ -65,7 +65,10 @@ class _HomeState extends State<Home> {
                     dateTextStyle: Theme.of(context).textTheme.displayMedium!,
                     height: 94,
                     width: 59,
-                    onDateChange: (date) {},
+                    onDateChange: (date) {
+                      BlocProvider.of<TaskCubitCubit>(context)
+                          .getSelectedDate(date);
+                    },
                   ),
                   const SizedBox(
                     height: 11,
@@ -128,7 +131,17 @@ class _HomeState extends State<Home> {
                                                       AppStrings.appDeleteTask,
                                                   backgroundColor:
                                                       AppColors.red,
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                TaskCubitCubit>(
+                                                            context)
+                                                        .deleteTask(BlocProvider
+                                                                .of<TaskCubitCubit>(
+                                                                    context)
+                                                            .taskList[index]
+                                                            .id);
+                                                    Navigator.pop(context);
+                                                  },
                                                 ),
                                               ),
                                               const SizedBox(
